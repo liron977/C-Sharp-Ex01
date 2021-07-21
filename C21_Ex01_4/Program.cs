@@ -14,14 +14,17 @@ namespace C21_Ex01_4
 
         private static void stringAnalysis()
         {
+            bool stringIsPalindrome = false;
+            string str = "";
             string userInput = getUserInput();
-            bool stringIsPalindrome=false;
+           
             checkIfStringIsPalindrome(ref stringIsPalindrome, userInput, 0, 7);
-   
-            string messageToTheUser =
-                String.Format($@"-The number {str} be divide by 5 ");
+            if (!stringIsPalindrome)
+            {
+                str = " not";
+            }
+            string messageToTheUser = String.Format($@"-The string is{str} palindrome ");
             Console.WriteLine(messageToTheUser);
-
             if (char.IsLetter(userInput[0]))
             {
                 printCountOfuppercaseLetter(userInput);
@@ -32,7 +35,6 @@ namespace C21_Ex01_4
                 PrintIfNumberDivideBy5(decimalNumber);
             }
         }
-
         private static void checkIfStringIsPalindrome(ref bool stringIsPalindrome, string i_UserInput, int leftStringIndex,int rightStringIndex)
         {
 
@@ -100,7 +102,6 @@ namespace C21_Ex01_4
             Console.Write(Environment.NewLine);
             return userInput;
         }
-
         private static bool isValidString(string i_UserInput)
         {
             bool isValidInput = false;
