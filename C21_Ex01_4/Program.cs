@@ -9,13 +9,19 @@ namespace C21_Ex01_4
     {
         static void Main()
         {
-            string userInput=getUserInput();
+            stringAnalysis();
         }
 
         private static void stringAnalysis()
         {
             string userInput = getUserInput();
-            int counterOfUppercaseLetters = 0;
+            bool stringIsPalindrome=false;
+            checkIfStringIsPalindrome(ref stringIsPalindrome, userInput, 0, 7);
+   
+            string messageToTheUser =
+                String.Format($@"-The number {str} be divide by 5 ");
+            Console.WriteLine(messageToTheUser);
+
             if (char.IsLetter(userInput[0]))
             {
                 printCountOfuppercaseLetter(userInput);
@@ -23,11 +29,32 @@ namespace C21_Ex01_4
             else
             {
                 int.TryParse(userInput, out int decimalNumber);
-                PrintisNumberDivideBy5(decimalNumber);
+                PrintIfNumberDivideBy5(decimalNumber);
             }
         }
 
-        private static void PrintisNumberDivideBy5(int i_number)
+        private static void checkIfStringIsPalindrome(ref bool stringIsPalindrome, string i_UserInput, int leftStringIndex,int rightStringIndex)
+        {
+
+            if (leftStringIndex >= rightStringIndex)
+            {
+                stringIsPalindrome = true;
+
+            }
+
+            else if (i_UserInput[leftStringIndex] == i_UserInput[rightStringIndex])
+            {
+                checkIfStringIsPalindrome(ref stringIsPalindrome,i_UserInput, leftStringIndex + 1, rightStringIndex - 1);
+            }
+            else
+            {
+                stringIsPalindrome = false;
+                return;
+            }
+
+        }
+
+        private static void PrintIfNumberDivideBy5(int i_number)
         {
             bool isDivideBy5 = false;
             string str = "can";
