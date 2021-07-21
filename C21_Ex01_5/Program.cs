@@ -8,9 +8,11 @@ namespace C21_Ex01_5
     class Program
     {
         public const int k_LengthString = 9;
+
         static void Main()
         {
-           
+            getUserInput();
+
         }
 
         private static string getUserInput()
@@ -53,10 +55,10 @@ namespace C21_Ex01_5
             return MaximumDigit;
         }
 
-        private static int howManyDigitCanBeDivideBy3(string i_UserInputStr)
-        {
-
-        }
+        /*  private static int howManyDigitCanBeDivideBy3(string i_UserInputStr)
+          {
+  
+          }*/
 
 
         private static bool isValidInput(string i_UserInputStr)
@@ -99,6 +101,8 @@ namespace C21_Ex01_5
                 binaryNumber = binaryNumber / 10;
             }
 
-            return (int)decimalNumber;
+            return (int) decimalNumber;
         }
     }
+}
+/*   }*/

@@ -5,56 +5,38 @@ using System.Text;
 
 namespace C21_Ex01_02
 {
-    class Program
+   public class Program
     {
-        private static char[] m_AsterisksArray = new Char[5];
+        
         static void Main()
         {
-            initTheAsterisksArray();
-            printAsterisksSandMachine(5,4,0);
+            PrintSandMachine(5);
         }
 
-        private static void initTheAsterisksArray()
+        public static void PrintSandMachine(int i_Hight)
         {
-            for (int i = 0; i < 5; i++)
-            {
-                m_AsterisksArray[i] = '*';
-
-            }
+            PrintSandMachineRecursion(i_Hight, i_Hight);
         }
 
-        private static void printAsterisksSandMachine(int SandMachineHeight, int counterFromTheArrayBeginning, int counterFromTheArrayEnd)
+        public static void PrintSandMachineRecursion(int i_AsteriskNumberToPrint, int i_Hight)
         {
-            if (SandMachineHeight == 1||( counterFromTheArrayBeginning==1&& counterFromTheArrayEnd==1))
+            StringBuilder str = new StringBuilder();
+
+            if (i_AsteriskNumberToPrint == 1)
             {
-                //printAsterisksArray();
+                str.Append(' ', ((i_Hight - 1) / 2));
+                str.Append("*");
+                Console.WriteLine(str);
                 return;
             }
-            else
-            {
-                printAsterisksArray();
-                Console.WriteLine();
-                m_AsterisksArray[counterFromTheArrayBeginning] = ' ';
-                m_AsterisksArray[counterFromTheArrayEnd] = ' ';
-            }
-
-            printAsterisksSandMachine(SandMachineHeight - 1, counterFromTheArrayBeginning - 1, counterFromTheArrayEnd + 1);
-            m_AsterisksArray[counterFromTheArrayBeginning] = '*';
-            m_AsterisksArray[counterFromTheArrayEnd] = '*';
-            printAsterisksArray();
-            Console.WriteLine();
-        }
-
-        private static void printAsterisksArray()
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                Console.Write(m_AsterisksArray[i]);
-            }
-
-           
-
-
+            str.Append(' ', ((i_Hight - i_AsteriskNumberToPrint) / 2));
+            str.Append('*', i_AsteriskNumberToPrint);
+                
+            Console.WriteLine(str);
+            PrintSandMachineRecursion(i_AsteriskNumberToPrint - 2, i_Hight);
+            Console.WriteLine(str);
         }
     }
+
+
 }
