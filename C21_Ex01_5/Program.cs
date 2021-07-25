@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace C21_Ex01_5
 {
@@ -9,7 +6,7 @@ namespace C21_Ex01_5
     {
         public const int k_NumberOfDigit = 9;
 
-        static void Main()
+        public static void Main()
         {
             printNumberStatistics();
         }
@@ -19,28 +16,26 @@ namespace C21_Ex01_5
             string userInput = getUserInput();
             int maxDigit = findMaximumDigit(userInput);
             int minDigit = findMinimumDigit(userInput);
-            int countDividedBy3Digit = FindCountDigitDividedBy3(userInput);
-            int countDigitsBiggerFromFirstDigit=FindCountDigitsBiggerFromFirstDigit(userInput);
-            string messageToTheUserAboutTheNumbers = String.Format($@"-The maximum digit is {maxDigit}.
+            int countDividedBy3Digit = findCountDigitDividedBy3(userInput);
+            int countDigitsBiggerFromFirstDigit = findCountDigitsBiggerFromUnityDigit(userInput);
+            string messageToTheUserAboutTheNumbers = String.Format(
+                $@"-The maximum digit is {maxDigit}.
 -The minimum digit is {minDigit}.
 -The count of digits that can be divided by 3: {countDividedBy3Digit}. 
--There are {countDigitsBiggerFromFirstDigit} digits which are bigger then the first digit.");
-           
-            Console.WriteLine(messageToTheUserAboutTheNumbers);
+-There are {countDigitsBiggerFromFirstDigit} digits which are bigger than the unity digit.");
 
+            Console.WriteLine(messageToTheUserAboutTheNumbers);
         }
 
         private static string getUserInput()
         {
             Console.WriteLine("Please enter a positive number with 9 digits");
-            string userInputStr=String.Empty;
+            string userInputStr = Console.ReadLine();
 
-            userInputStr = Console.ReadLine();
-            while (!isValidInput(userInputStr))
+            while(!isValidInput(userInputStr))
             {
                 Console.WriteLine("Invalid input,please enter a positive number with 9 digits");
                 userInputStr = Console.ReadLine();
-              
             }
 
             return userInputStr;
@@ -50,10 +45,9 @@ namespace C21_Ex01_5
         {
             double minimumDigit = char.GetNumericValue(i_UserInputStr[0]);
 
-            for (int i = 0; i < k_NumberOfDigit; i++)
+            for(int i = 0; i < k_NumberOfDigit; i++)
             {
-               
-                    minimumDigit =Math.Min(char.GetNumericValue(i_UserInputStr[i]), minimumDigit);
+                minimumDigit = Math.Min(char.GetNumericValue(i_UserInputStr[i]), minimumDigit);
             }
 
             return (int)minimumDigit;
@@ -61,64 +55,71 @@ namespace C21_Ex01_5
 
         private static int findMaximumDigit(string i_UserInputStr)
         {
-            double MaximumDigit =0;
-            for (int i = 0; i < k_NumberOfDigit; i++)
+            double maximumDigit = 0;
+
+            for(int i = 0; i < k_NumberOfDigit; i++)
             {
-                MaximumDigit = Math.Max(char.GetNumericValue(i_UserInputStr[i]), MaximumDigit);
+                maximumDigit = Math.Max(char.GetNumericValue(i_UserInputStr[i]), maximumDigit);
             }
 
-            return (int)MaximumDigit;
+            return (int)maximumDigit;
         }
 
-        private static int FindCountDigitDividedBy3(string i_UserInputStr)
+        private static int findCountDigitDividedBy3(string i_UserInputStr)
         {
             int countDividedBy3Digit = 0;
-            for (int i = 0; i < k_NumberOfDigit; i++)
+
+            for(int i = 0; i < k_NumberOfDigit; i++)
             {
-                if (char.GetNumericValue(i_UserInputStr[i]) % 3 == 0)
+                if(char.GetNumericValue(i_UserInputStr[i]) % 3 == 0)
                 {
                     countDividedBy3Digit++;
                 }
             }
 
             return countDividedBy3Digit;
-
         }
 
         private static bool isValidInput(string i_UserInputStr)
         {
             bool isUserValidInput = true;
+            int countOfZero = 0;
 
-            if (i_UserInputStr.Length != k_NumberOfDigit)
-            {
+            if(i_UserInputStr.Length != k_NumberOfDigit)
                 isUserValidInput = false;
-            }
 
             else
-            {
-                for (int i = 0; i < k_NumberOfDigit; i++)
+                for(var i = 0; i < k_NumberOfDigit; i++)
                 {
-                    if (!char.IsDigit(i_UserInputStr[i]))
+                    if(!char.IsDigit(i_UserInputStr[i]))
                     {
                         isUserValidInput = false;
                         break;
                     }
+                    else if(i_UserInputStr[i] == '0')
+                    {
+                        countOfZero++;
+                    }
                 }
+
+            if(countOfZero == k_NumberOfDigit)
+            {
+                isUserValidInput = false;
             }
 
             return isUserValidInput;
-
         }
 
-        private static int FindCountDigitsBiggerFromFirstDigit(string i_UserInput)
+        private static int findCountDigitsBiggerFromUnityDigit(string i_UserInput)
         {
             int countDigitsBiggerFromFirstDigit = 0;
-            int firstDigit = (int)char.GetNumericValue(i_UserInput[0]);
-            int currDigit = 0;
-            for (int i = 1; i < k_NumberOfDigit; i++)
+            int unityDigit = (int)char.GetNumericValue(i_UserInput[k_NumberOfDigit-1]);
+            int currentDigit = unityDigit;
+
+            for(int i = 0; i < k_NumberOfDigit-1; i++)
             {
-                currDigit = (int) char.GetNumericValue(i_UserInput[i]);
-                if (currDigit > firstDigit)
+                currentDigit = (int)char.GetNumericValue(i_UserInput[i]);
+                if(currentDigit > unityDigit)
                 {
                     countDigitsBiggerFromFirstDigit++;
                 }
@@ -126,7 +127,5 @@ namespace C21_Ex01_5
 
             return countDigitsBiggerFromFirstDigit;
         }
-
     }
 }
-

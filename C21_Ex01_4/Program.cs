@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 
 namespace C21_Ex01_4
 {
     class Program
     {
-        static void Main()
+        public static void Main()
         {
             stringAnalysis();
         }
@@ -17,65 +15,72 @@ namespace C21_Ex01_4
             bool stringIsPalindrome = false;
             string str = "";
             string userInput = getUserInput();
-           
+
             checkIfStringIsPalindrome(ref stringIsPalindrome, userInput, 0, 7);
-            if (!stringIsPalindrome)
+            if(!stringIsPalindrome)
             {
                 str = " not";
             }
+
             string messageToTheUser = String.Format($@"-The string is{str} palindrome ");
             Console.WriteLine(messageToTheUser);
-            if (char.IsLetter(userInput[0]))
+            if(char.IsLetter(userInput[0]))
             {
-                printCountOfuppercaseLetter(userInput);
+                printCountOfUppercaseLetter(userInput);
             }
             else
             {
                 int.TryParse(userInput, out int decimalNumber);
-                PrintIfNumberDivideBy5(decimalNumber);
+                printIfNumberDivideBy5(decimalNumber);
             }
         }
-        private static void checkIfStringIsPalindrome(ref bool stringIsPalindrome, string i_UserInput, int leftStringIndex,int rightStringIndex)
+
+        private static void checkIfStringIsPalindrome(
+            ref bool io_StringIsPalindrome,
+            string i_UserInput,
+            int i_LeftStringIndex,
+            int i_RightStringIndex)
         {
-
-            if (leftStringIndex >= rightStringIndex)
+            if(i_LeftStringIndex >= i_RightStringIndex)
             {
-                stringIsPalindrome = true;
-
+                io_StringIsPalindrome = true;
             }
 
-            else if (i_UserInput[leftStringIndex] == i_UserInput[rightStringIndex])
+            else if(i_UserInput[i_LeftStringIndex] == i_UserInput[i_RightStringIndex])
             {
-                checkIfStringIsPalindrome(ref stringIsPalindrome,i_UserInput, leftStringIndex + 1, rightStringIndex - 1);
+                checkIfStringIsPalindrome(
+                    ref io_StringIsPalindrome,
+                    i_UserInput,
+                    i_LeftStringIndex + 1,
+                    i_RightStringIndex - 1);
             }
             else
             {
-                stringIsPalindrome = false;
-                return;
+                io_StringIsPalindrome = false;
             }
-
         }
 
-        private static void PrintIfNumberDivideBy5(int i_number)
+        private static void printIfNumberDivideBy5(int i_Number)
         {
-            bool isDivideBy5 = false;
+            bool isDivideBy5 = i_Number % 5 == 0;
             string str = "can";
-            isDivideBy5 = i_number % 5 == 0;
-            if (!isDivideBy5)
+
+            if(!isDivideBy5)
             {
                 str = "can not";
             }
-            string messageToTheUser =
-                String.Format($@"-The number {str} be divide by 5 ");
+
+            string messageToTheUser = String.Format($@"-The number {str} be divide by 5 ");
             Console.WriteLine(messageToTheUser);
         }
 
-        private static void printCountOfuppercaseLetter(string i_userInput)
+        private static void printCountOfUppercaseLetter(string i_UserInput)
         {
             int counterOfUppercaseLetters = 0;
-            for (int i = 0; i < i_userInput.Length; i++)
+
+            for(int i = 0; i < i_UserInput.Length; i++)
             {
-                if (char.IsUpper(i_userInput[i]))
+                if(char.IsUpper(i_UserInput[i]))
                 {
                     counterOfUppercaseLetters++;
                 }
@@ -85,36 +90,41 @@ namespace C21_Ex01_4
                 String.Format($@"-The number of uppercase letters is {counterOfUppercaseLetters}");
             Console.WriteLine(messageToTheUser);
         }
+
         private static string getUserInput()
         {
             bool isValidInput = false;
             string userInput = string.Empty;
-            while (!isValidInput)
+
+            while(!isValidInput)
             {
                 Console.WriteLine("Please enter a string:");
                 userInput = Console.ReadLine();
                 isValidInput = isValidString(userInput);
-                if (!isValidInput)
+                if(!isValidInput)
                 {
                     Console.WriteLine("Invalid input,please enter a constant string with 8 chars ");
                 }
             }
+
             Console.Write(Environment.NewLine);
             return userInput;
         }
+
         private static bool isValidString(string i_UserInput)
         {
             bool isValidInput = false;
             char firstInputChar = i_UserInput[0];
             bool isFirstCharIsDigit = char.IsDigit((firstInputChar));
             bool isFirstCharIsLetter = char.IsLetter((firstInputChar));
-            if ((i_UserInput.Length == 8)&&(char.IsLetterOrDigit(firstInputChar)))
+
+            if((i_UserInput.Length == 8) && (char.IsLetterOrDigit(firstInputChar)))
             {
-                for (int i = 0; i < i_UserInput.Length; i++)
+                for(int i = 0; i < i_UserInput.Length; i++)
                 {
-                    isValidInput = ((isFirstCharIsLetter && char.IsLetter(i_UserInput[i])) ||
-                                   (isFirstCharIsDigit && char.IsDigit(i_UserInput[i])));
-                    if (!isValidInput)
+                    isValidInput = ((isFirstCharIsLetter && char.IsLetter(i_UserInput[i]))
+                                    || (isFirstCharIsDigit && char.IsDigit(i_UserInput[i])));
+                    if(!isValidInput)
                     {
                         break;
                     }
@@ -123,7 +133,5 @@ namespace C21_Ex01_4
 
             return isValidInput;
         }
-
     }
-
 }

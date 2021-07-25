@@ -1,38 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace C21_Ex01_01
 {
-   public class Program
-   {
-       public const int k_InputSeriesLength = 3;
-       public const int k_BinaryInputLength = 9;
-        private static string[] m_InputNumbersArray=new string[k_InputSeriesLength];
-  
-        private static void Main()
+    public class Program
+    {
+        private const int k_InputSeriesLength = 3;
+        private const int k_BinaryInputLength = 9;
+        private static string[] s_InputNumbersArray;
+
+        public static void Main()
         {
+            s_InputNumbersArray = new string[k_InputSeriesLength];
             binarySeries();
         }
+
         private static void binarySeries()
         {
             string userInput;
 
             Console.WriteLine("Please enter 3 binary numbers including 9 digits:");
-            for (int i = 0; i < k_InputSeriesLength; i++)
-            { 
+            for(int i = 0; i < k_InputSeriesLength; i++)
+            {
                 userInput = Console.ReadLine();
-                if (!isValidUserInput(userInput))
+                if(!isValidUserInput(userInput))
                 {
                     Console.WriteLine("Invalid input,please enter a binary number");
                     i--;
                 }
                 else
                 {
-                    m_InputNumbersArray[i] = userInput;
+                    s_InputNumbersArray[i] = userInput;
                 }
-
             }
 
             printBinarySeriesStatistics();
@@ -40,9 +39,8 @@ namespace C21_Ex01_01
 
         private static void printBinarySeriesStatistics()
         {
-
-           int minimumNumber = Int32.MaxValue;
-           int maximumNumber = 0;
+            int minimumNumber = int.MaxValue;
+            int maximumNumber = 0;
             int sumOfZerosInTheBinarySeries = 0;
             int sumOfOnesInTheBinarySeries = 0;
             int decimalNumber = 0;
@@ -50,38 +48,41 @@ namespace C21_Ex01_01
             int countOfAscendingNumbers = 0;
             double averageOfZeroInBinaryNumber = 0;
             double averageOfOnesInBinaryNumber = 0;
-
             StringBuilder finalMessage = new StringBuilder("-The decimal numbers are:  ");
-            for (int i = 0; i < k_InputSeriesLength; i++)
-            {
 
-                decimalNumber = convertBinaryNumberToDecimal(m_InputNumbersArray[i]);
+            for(int i = 0; i < k_InputSeriesLength; i++)
+            {
+                decimalNumber = convertBinaryNumberToDecimal(s_InputNumbersArray[i]);
                 finalMessage.AppendFormat("{0} ", decimalNumber);
-                countZerosAndOnesInBinaryNumber(m_InputNumbersArray[i], ref sumOfOnesInTheBinarySeries, ref sumOfZerosInTheBinarySeries);
-                if (isPowerOfTwo(decimalNumber))
+                countZerosAndOnesInBinaryNumber(
+                    s_InputNumbersArray[i],
+                    ref sumOfOnesInTheBinarySeries,
+                    ref sumOfZerosInTheBinarySeries);
+                if(isPowerOfTwo(decimalNumber))
                 {
                     countOfNumbersPowerOfTwo++;
                 }
 
-                if (isAscendingNumber(decimalNumber))
+                if(isAscendingNumber(decimalNumber))
                 {
                     countOfAscendingNumbers++;
                 }
 
-                if (decimalNumber > maximumNumber)
+                if(decimalNumber > maximumNumber)
                 {
                     maximumNumber = decimalNumber;
                 }
 
-                if (decimalNumber < minimumNumber)
+                if(decimalNumber < minimumNumber)
                 {
                     minimumNumber = decimalNumber;
                 }
             }
 
-            averageOfOnesInBinaryNumber = sumOfOnesInTheBinarySeries / k_InputSeriesLength;
-            averageOfZeroInBinaryNumber= sumOfZerosInTheBinarySeries / k_InputSeriesLength;
-            string messageToTheUserAboutTheNumbers = String.Format($@"-The general average of zeros is {averageOfZeroInBinaryNumber}.
+            averageOfOnesInBinaryNumber = (double)sumOfOnesInTheBinarySeries / k_InputSeriesLength;
+            averageOfZeroInBinaryNumber = (double)sumOfZerosInTheBinarySeries / k_InputSeriesLength;
+            string messageToTheUserAboutTheNumbers = string.Format(
+                $@"-The general average of zeros is {averageOfZeroInBinaryNumber}.
 -The general average of ones is {averageOfOnesInBinaryNumber}.
 -The count of numbers that are the power of two: {countOfNumbersPowerOfTwo}. 
 -There are {countOfAscendingNumbers} numbers which are an ascending series.
@@ -91,70 +92,70 @@ namespace C21_Ex01_01
             finalMessage.AppendFormat("{0} ", '.');
             Console.WriteLine(finalMessage);
             Console.WriteLine(messageToTheUserAboutTheNumbers);
-
         }
 
-        private static bool isAscendingNumber(int decimalNumber)
+        private static bool isAscendingNumber(int i_DecimalNumber)
         {
-            int prevDigit = Int32.MaxValue;
-            int currDigit = 0;
+            int prevDigit = int.MaxValue;
+            int currentDigit = 0;
             bool isNumberAscending = true;
 
-            while (decimalNumber>0)
+            while(i_DecimalNumber > 0)
             {
-                currDigit = decimalNumber % 10;
-                if (prevDigit <= currDigit)
+                currentDigit = i_DecimalNumber % 10;
+                if(prevDigit <= currentDigit)
                 {
                     isNumberAscending = false;
                     break;
                 }
 
-                prevDigit = currDigit;
-                decimalNumber = decimalNumber / 10;
+                prevDigit = currentDigit;
+                i_DecimalNumber = i_DecimalNumber / 10;
             }
 
             return isNumberAscending;
-
         }
 
-        private static bool isPowerOfTwo(int decimalNumber)
+        private static bool isPowerOfTwo(int i_DecimalNumber)
         {
-            bool isPowerOfTwo = false;
-            isPowerOfTwo = (decimalNumber & (decimalNumber - 1)) == 0 && decimalNumber != 0;
-            return isPowerOfTwo;
+            bool isPowerOfTwo = (i_DecimalNumber & (i_DecimalNumber - 1)) == 0 && i_DecimalNumber != 0;
 
+            return isPowerOfTwo;
         }
+
         private static int convertBinaryNumberToDecimal(string i_UserInput)
         {
             int pow = 0;
             double decimalNumber = 0;
-            int number = 0;
 
             int.TryParse(i_UserInput, out int binaryNumber);
 
-            while (binaryNumber > 0)
+            while(binaryNumber > 0)
             {
-                decimalNumber += (binaryNumber % 10) * Math.Pow(2, pow);
+                decimalNumber += binaryNumber % 10 * Math.Pow(2, pow);
                 pow++;
                 binaryNumber = binaryNumber / 10;
             }
 
             return (int)decimalNumber;
         }
-        private static void countZerosAndOnesInBinaryNumber(string i_UserInput, ref int sumOfOnesInTheBinarySeries, ref int sumOfZerosInTheBinarySeries)
+
+        private static void countZerosAndOnesInBinaryNumber(
+            string i_UserInput,
+            ref int i_SumOfOnesInTheBinarySeries,
+            ref int i_SumOfZerosInTheBinarySeries)
         {
-            for (int i = 0; i < k_BinaryInputLength; i++)
+            for(int i = 0; i < k_BinaryInputLength; i++)
             {
-                if (i_UserInput[i] == '0')
+                if(i_UserInput[i] == '0')
                 {
-                    sumOfZerosInTheBinarySeries++;
+                    i_SumOfZerosInTheBinarySeries++;
                 }
                 else
                 {
-                    sumOfOnesInTheBinarySeries++;
+                    i_SumOfOnesInTheBinarySeries++;
                 }
             }
-
         }
 
         private static bool isValidUserInput(string i_UserInput)
@@ -166,10 +167,8 @@ namespace C21_Ex01_01
 
         private static bool isValidInputLength(string i_UserInput)
         {
-            bool isValidInputLength;
             int userInputLength = i_UserInput.Length;
-
-            isValidInputLength = userInputLength == k_BinaryInputLength;
+            bool isValidInputLength = userInputLength == k_BinaryInputLength;
 
             return isValidInputLength;
         }
@@ -178,13 +177,12 @@ namespace C21_Ex01_01
         {
             bool isValidBinaryInput = true;
 
-            for (int i = 0; i < k_BinaryInputLength && isValidBinaryInput; i++)
+            for(int i = 0; i < k_BinaryInputLength && isValidBinaryInput; i++)
             {
                 isValidBinaryInput = i_UserInput[i] == '0' || i_UserInput[i] == '1';
             }
 
             return isValidBinaryInput;
         }
-
     }
 }
