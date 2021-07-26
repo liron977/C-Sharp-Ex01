@@ -31,7 +31,7 @@ namespace C21_Ex01_4
             else
             {
                 int.TryParse(userInput, out int decimalNumber);
-                printIfNumberDivideBy5(decimalNumber);
+                printIfNumberDivideBy4(decimalNumber);
             }
         }
 
@@ -60,17 +60,17 @@ namespace C21_Ex01_4
             }
         }
 
-        private static void printIfNumberDivideBy5(int i_Number)
+        private static void printIfNumberDivideBy4(int i_Number)
         {
-            bool isDivideBy5 = i_Number % 5 == 0;
+            bool isDivideBy4 = i_Number % 4== 0;
             string str = "can";
 
-            if(!isDivideBy5)
+            if(!isDivideBy4)
             {
                 str = "can not";
             }
 
-            string messageToTheUser = String.Format($@"-The number {str} be divide by 5 ");
+            string messageToTheUser = String.Format($@"-The number {str} be divide by 4 ");
             Console.WriteLine(messageToTheUser);
         }
 
